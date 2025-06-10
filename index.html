@@ -11,91 +11,136 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             overflow-x: hidden;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 25%, #74b9ff 50%, #0984e3 75%, #6c5ce7 100%);
+            background: #000;
             min-height: 100vh;
         }
 
-        .animated-background {
+        /* Floating Navigation Dots */
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-dot::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 5px 15px;
+            border-radius: 20px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .nav-dot:hover::before {
+            opacity: 1;
+            right: 40px;
+        }
+
+        .nav-dot.active {
+            background: white;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+
+        .nav-dot:hover {
+            transform: scale(1.5);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Animated Background */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(to bottom, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+        }
+
+        .particles {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 25%, #74b9ff 50%, #0984e3 75%, #6c5ce7 100%);
         }
 
-
-
-        .animated-background::before {
-            content: '';
+        .particle {
             position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float-up 15s linear infinite;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Geometric Grid Overlay */
+        .grid-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(116, 185, 255, 0.2) 0%, transparent 50%),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="techGrid" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="12.5" cy="12.5" r="1" fill="rgba(255,255,255,0.1)"/><path d="M 25 0 L 0 0 0 25" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23techGrid)"/></svg>');
-            animation: cloudFloat 25s ease-in-out infinite;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-move 20s linear infinite;
         }
 
-        .animated-background::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 60% 10%, rgba(255, 255, 255, 0.08) 0%, transparent 70%),
-                radial-gradient(ellipse at 10% 60%, rgba(116, 185, 255, 0.1) 0%, transparent 70%),
-                radial-gradient(ellipse at 90% 90%, rgba(108, 92, 231, 0.1) 0%, transparent 70%);
-            animation: atmosphereFlow 30s ease-in-out infinite alternate;
-        }
-
-        @keyframes cloudFloat {
-            0%, 100% { 
-                transform: translateX(0px) translateY(0px) scale(1);
-                opacity: 1;
-            }
-            25% { 
-                transform: translateX(-10px) translateY(-15px) scale(1.05);
-                opacity: 0.8;
-            }
-            50% { 
-                transform: translateX(5px) translateY(-25px) scale(0.95);
-                opacity: 1;
-            }
-            75% { 
-                transform: translateX(15px) translateY(-10px) scale(1.02);
-                opacity: 0.9;
-            }
-        }
-
-        @keyframes atmosphereFlow {
-            0% { 
-                transform: scale(1) rotate(0deg);
-                opacity: 0.6;
-            }
-            50% { 
-                transform: scale(1.1) rotate(2deg);
-                opacity: 0.8;
-            }
-            100% { 
-                transform: scale(0.9) rotate(-1deg);
-                opacity: 0.7;
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(1deg); }
+        @keyframes grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
         }
 
         .container {
@@ -106,231 +151,320 @@
             z-index: 1;
         }
 
-        .hero {
+        section {
             min-height: 100vh;
             display: flex;
+            align-items: center;
+            padding: 80px 0 40px;
+            position: relative;
+        }
+
+        /* Hero Section */
+        .hero {
             flex-direction: column;
             justify-content: center;
-            align-items: center;
             text-align: center;
             color: white;
-            animation: fadeInUp 1s ease-out;
         }
 
-        @keyframes fadeInUp {
-            from {
+        .hero-content {
+            animation: hero-entrance 1.5s ease-out;
+        }
+
+        @keyframes hero-entrance {
+            0% {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: scale(0.9) translateY(50px);
             }
-            to {
+            100% {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1) translateY(0);
             }
         }
 
+        /* Holographic Logo */
         .logo-container {
-            margin-bottom: 2rem;
-            animation: logoFloat 1.5s ease-out;
+            margin-bottom: 3rem;
+            perspective: 1000px;
         }
 
-        @keyframes logoFloat {
-            from {
-                opacity: 0;
-                transform: translateY(-50px) scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .animated-logo {
-            width: 120px;
-            height: 120px;
+        .holographic-logo {
+            width: 150px;
+            height: 150px;
             margin: 0 auto;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: logo-float 6s ease-in-out infinite;
         }
 
-        .atom-structure {
+        @keyframes logo-float {
+            0%, 100% { transform: rotateY(0deg) rotateX(0deg) translateY(0); }
+            25% { transform: rotateY(45deg) rotateX(10deg) translateY(-10px); }
+            50% { transform: rotateY(0deg) rotateX(-10deg) translateY(-20px); }
+            75% { transform: rotateY(-45deg) rotateX(10deg) translateY(-10px); }
+        }
+
+        .logo-layer {
+            position: absolute;
             width: 100%;
             height: 100%;
-            position: relative;
-            animation: atomRotate 10s linear infinite;
-        }
-
-        @keyframes atomRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .electron-orbit {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            transform-origin: center;
-        }
-
-        .orbit-1 {
-            width: 80px;
-            height: 80px;
-            margin: -40px 0 0 -40px;
-            animation: orbit1 3s linear infinite;
-        }
-
-        .orbit-2 {
-            width: 100px;
-            height: 40px;
-            margin: -20px 0 0 -50px;
-            animation: orbit2 4s linear infinite;
-            transform: rotateX(60deg);
-        }
-
-        .orbit-3 {
-            width: 100px;
-            height: 40px;
-            margin: -20px 0 0 -50px;
-            animation: orbit3 5s linear infinite;
-            transform: rotateX(-60deg);
-        }
-
-        @keyframes orbit1 {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes orbit2 {
-            from { transform: rotateX(60deg) rotate(0deg); }
-            to { transform: rotateX(60deg) rotate(360deg); }
-        }
-
-        @keyframes orbit3 {
-            from { transform: rotateX(-60deg) rotate(0deg); }
-            to { transform: rotateX(-60deg) rotate(360deg); }
-        }
-
-        .electron {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-        }
-
-        .electron-1 {
-            top: -4px;
-            left: 50%;
-            margin-left: -4px;
-        }
-
-        .electron-2 {
-            top: 50%;
-            right: -4px;
-            margin-top: -4px;
-        }
-
-        .nucleus {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 30px;
-            height: 30px;
-            margin: -15px 0 0 -15px;
-            background: linear-gradient(45deg, #fff, #f0f0f0);
-            border-radius: 6px;
+            border: 2px solid;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 4rem;
             font-weight: bold;
-            color: #333;
-            font-size: 18px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
+        .logo-layer:nth-child(1) {
+            border-color: #00ffff;
+            color: #00ffff;
+            transform: translateZ(10px);
+        }
+
+        .logo-layer:nth-child(2) {
+            border-color: #ff00ff;
+            color: #ff00ff;
+            transform: translateZ(0px);
+            opacity: 0.8;
+        }
+
+        .logo-layer:nth-child(3) {
+            border-color: #ffff00;
+            color: #ffff00;
+            transform: translateZ(-10px);
+            opacity: 0.6;
+        }
+
+        /* Glitch Effect for Title */
         .company-name {
-            font-size: 3.5rem;
-            font-weight: 300;
+            font-size: 5rem;
+            font-weight: 900;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #fff, #f0f0f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: textGlow 2s ease-in-out infinite alternate;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 5px;
         }
 
-        @keyframes textGlow {
-            from { filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)); }
-            to { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8)); }
+        .glitch {
+            position: relative;
+            color: white;
+            font-size: inherit;
+            font-weight: inherit;
+            text-shadow: 
+                0.05em 0 0 rgba(255, 0, 0, 0.75),
+                -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            animation: glitch 1s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                text-shadow: 
+                    0.05em 0 0 rgba(255, 0, 0, 0.75),
+                    -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            }
+            20% {
+                text-shadow: 
+                    0.05em 0 0 rgba(255, 0, 0, 0.75),
+                    -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+                    0.05em 0.025em 0 rgba(0, 0, 255, 0.75);
+            }
         }
 
         .tagline {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: fadeIn 2s ease-out 0.5s both;
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            font-weight: 300;
+            letter-spacing: 2px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 0.9; }
-        }
-
+        /* Futuristic Buttons */
         .cta-buttons {
             display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
+            gap: 2rem;
             justify-content: center;
-            animation: fadeIn 2s ease-out 1s both;
+            flex-wrap: wrap;
         }
 
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
+        .quantum-btn {
+            position: relative;
+            padding: 15px 40px;
+            background: transparent;
+            color: white;
             text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            overflow: hidden;
             transition: all 0.3s ease;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .btn-primary {
-            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .store-button {
-            display: inline-block;
-            margin: 10px;
+        .quantum-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            z-index: -1;
+            opacity: 0.5;
             transition: all 0.3s ease;
+        }
+
+        .quantum-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
+        }
+
+        .quantum-btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .quantum-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
+        }
+
+        .quantum-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* App Cards with 3D Effect */
+        .apps-section {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
             position: relative;
         }
 
-        .store-button:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00ffff, transparent);
+            animation: line-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes line-glow {
+            0%, 100% { opacity: 0.5; width: 100px; }
+            50% { opacity: 1; width: 200px; }
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            perspective: 1000px;
+        }
+
+        .app-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            overflow: hidden;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: all 0.6s ease;
+            animation: card-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes card-pulse {
+            0%, 100% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+        }
+
+        .app-card:hover {
+            transform: rotateY(10deg) rotateX(5deg) translateZ(50px);
+            box-shadow: 
+                0 25px 50px rgba(0, 255, 255, 0.3),
+                0 0 100px rgba(255, 0, 255, 0.1);
+        }
+
+        .app-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            animation: icon-float 3s ease-in-out infinite;
+        }
+
+        @keyframes icon-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        /* Store Buttons */
+        .store-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .store-button {
+            position: relative;
+            transition: all 0.3s ease;
         }
 
         .store-button img {
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            height: 50px;
+            filter: brightness(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .store-button:hover img {
+            filter: brightness(1.1);
+            transform: scale(1.05);
         }
 
         .coming-soon-badge {
@@ -343,242 +477,276 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.9);
+            color: #00ffff;
+            padding: 6px 16px;
+            border-radius: 15px;
             font-size: 0.8rem;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid #00ffff;
         }
 
-        .apps-section {
-            padding: 5rem 0;
-            background: rgba(255, 255, 255, 0.05);
+        /* Sections */
+        .about-section,
+        .contact-section {
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            margin-top: 2rem;
         }
 
-        .section-title {
+        .about-content,
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
             text-align: center;
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 3rem;
-            font-weight: 300;
         }
 
-        .apps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .app-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            color: white;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .app-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .app-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            border-radius: 18px;
-            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-        }
-
-        .app-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .app-description {
-            font-size: 0.95rem;
+        .about-content p,
+        .contact-content p {
+            font-size: 1.2rem;
+            line-height: 2;
             opacity: 0.8;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.8);
         }
 
-        .coming-soon {
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.6);
-            padding: 2rem;
+        .contact-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            text-align: center;
-            border: 2px dashed rgba(255, 255, 255, 0.2);
+            padding: 3rem;
+            margin-top: 3rem;
+            backdrop-filter: blur(10px);
         }
 
-        .coming-soon .app-icon {
-            background: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.5);
+        .contact-item {
+            margin-bottom: 2rem;
         }
 
-        .footer {
-            text-align: center;
-            padding: 3rem 0;
-            color: rgba(255, 255, 255, 0.7);
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        .contact-info {
+        .contact-item h3 {
+            font-size: 1.4rem;
             margin-bottom: 1rem;
+            color: #00ffff;
         }
 
-        .contact-info a {
+        .contact-item a {
             color: white;
             text-decoration: none;
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
         }
 
-        .contact-info a:hover {
-            text-decoration: underline;
+        .contact-item a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00ffff, #ff00ff);
+            transition: width 0.3s ease;
         }
 
-        /* Responsive Design */
+        .contact-item a:hover::after {
+            width: 100%;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
+            .nav-dots {
+                right: 15px;
+            }
+
             .company-name {
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
-            
-            .tagline {
-                font-size: 1rem;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 200px;
-                justify-content: center;
-            }
-            
-            .apps-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .animated-logo {
+
+            .holographic-logo {
                 width: 100px;
                 height: 100px;
             }
-        }
 
-        @media (max-width: 480px) {
-            .company-name {
-                font-size: 2rem;
+            .logo-layer {
+                font-size: 3rem;
             }
-            
-            .container {
-                padding: 0 15px;
-            }
-            
-            .app-card {
-                padding: 1.5rem;
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="animated-background"></div>
+    <div class="matrix-bg"></div>
+    <div class="grid-overlay"></div>
+    <div class="particles" id="particles"></div>
     
-    <div class="container">
-        <section class="hero">
-            <div class="logo-container">
-                <div class="animated-logo">
-                    <div class="atom-structure">
-                        <div class="electron-orbit orbit-1">
-                            <div class="electron electron-1"></div>
-                        </div>
-                        <div class="electron-orbit orbit-2">
-                            <div class="electron electron-2"></div>
-                        </div>
-                        <div class="electron-orbit orbit-3">
-                            <div class="electron electron-1"></div>
-                        </div>
-                        <div class="nucleus">G</div>
-                    </div>
-                </div>
-            </div>
-            
-            <h1 class="company-name">Genue Labs</h1>
-            <p class="tagline">Transforming brilliant ideas into reality, one innovation at a time</p>
-            
-            <div class="cta-buttons">
-                <a href="#apps" class="btn btn-primary">Explore Our Apps</a>
-                <a href="mailto:support@genuelabs.com" class="btn btn-secondary">Get in Touch</a>
-            </div>
-        </section>
-        
-        <section id="apps" class="apps-section">
-            <div class="container">
-                <h2 class="section-title">Our Applications</h2>
-                
-                <div class="apps-grid">
-                    <!-- Main App -->
-                    <div class="app-card">
-                        <div class="app-icon">💊</div>
-                        <h3 class="app-title">Medication Reminder</h3>
-                        <p class="app-description">
-                            Take control of your health with our comprehensive medication management app. 
-                            Smart tracking, flexible scheduling, and intelligent notifications ensure you never miss a dose.
-                        </p>
-                        <div class="cta-buttons">
-                            <a href="https://play.google.com/store/apps/details?id=com.levan.medication_reminder_app" 
-                               target="_blank" class="store-button google-play">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" 
-                                     alt="Get it on Google Play" style="height: 60px;">
-                            </a>
-                            <div class="store-button app-store coming-soon-badge">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" 
-                                     alt="Download on the App Store" style="height: 60px; opacity: 0.6;">
-                                <span class="coming-soon-overlay">Coming Soon</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Coming Soon Apps -->
-                    <div class="coming-soon">
-                        <div class="app-icon">🚀</div>
-                        <h3 class="app-title">Next Innovation</h3>
-                        <p class="app-description">Something amazing is brewing in our labs...</p>
-                        <p style="color: rgba(255,255,255,0.5); font-style: italic;">Coming Soon</p>
-                    </div>
-                    
-                    <div class="coming-soon">
-                        <div class="app-icon">⚡</div>
-                        <h3 class="app-title">Future Project</h3>
-                        <p class="app-description">Revolutionary solutions are on the way...</p>
-                        <p style="color: rgba(255,255,255,0.5); font-style: italic;">Coming Soon</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+    <!-- Custom Cursor -->
     
-    <footer class="footer">
+    <!-- Navigation Dots -->
+    <nav class="nav-dots">
+        <div class="nav-dot active" data-section="home" data-tooltip="Home"></div>
+        <div class="nav-dot" data-section="apps" data-tooltip="Our Apps"></div>
+        <div class="nav-dot" data-section="about" data-tooltip="About"></div>
+        <div class="nav-dot" data-section="contact" data-tooltip="Contact"></div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="hero">
         <div class="container">
-            <div class="contact-info">
-                <p>Contact us: <a href="mailto:support@genuelabs.com">support@genuelabs.com</a></p>
+            <div class="hero-content">
+                <div class="logo-container">
+                    <div class="holographic-logo">
+                        <div class="logo-layer">G</div>
+                        <div class="logo-layer">G</div>
+                        <div class="logo-layer">G</div>
+                    </div>
+                </div>
+                
+                <h1 class="company-name">
+                    <span class="glitch">GENUE LABS</span>
+                </h1>
+                <p class="tagline">Transforming Ideas Into Reality</p>
+                
+                <div class="cta-buttons">
+                    <a href="#apps" class="quantum-btn">
+                        <span>Explore Innovation</span>
+                    </a>
+                    <a href="#contact" class="quantum-btn">
+                        <span>Join the Future</span>
+                    </a>
+                </div>
             </div>
-            <p>&copy; 2025 Genue Labs. Innovating for a better tomorrow.</p>
         </div>
-    </footer>
+    </section>
+    
+    <!-- Apps Section -->
+    <section id="apps" class="apps-section">
+        <div class="container">
+            <h2 class="section-title">Our Innovations</h2>
+            
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="app-icon">💊</div>
+                    <h3 class="app-title">Medication Reminder</h3>
+                    <p class="app-description">
+                        Revolutionary health management powered by AI. Smart tracking, 
+                        predictive scheduling, and quantum-encrypted data protection.
+                    </p>
+                    <div class="store-buttons">
+                        <a href="https://play.google.com/store/apps/details?id=com.levan.medication_reminder_app" 
+                           target="_blank" class="store-button">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" 
+                                 alt="Get it on Google Play">
+                        </a>
+                        <div class="store-button coming-soon-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" 
+                                 alt="Download on the App Store" style="opacity: 0.3;">
+                            <span class="coming-soon-overlay">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="app-card coming-soon">
+                    <div class="app-icon">🚀</div>
+                    <h3 class="app-title">Project Nexus</h3>
+                    <p class="app-description">
+                        The future of connectivity. Coming 2025.
+                    </p>
+                </div>
+                
+                <div class="app-card coming-soon">
+                    <div class="app-icon">⚡</div>
+                    <h3 class="app-title">Quantum Core</h3>
+                    <p class="app-description">
+                        Redefining possibilities. In development.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <h2 class="section-title">The Vision</h2>
+                <p>
+                    At Genue Labs, we don't just create apps—we architect the future. 
+                    Our quantum-inspired development process pushes the boundaries of what's possible,
+                    merging cutting-edge technology with human-centered design.
+                </p>
+                <p>
+                    Every line of code is a step toward tomorrow. Every innovation brings us closer 
+                    to a world where technology seamlessly enhances human potential.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-content">
+                <h2 class="section-title">Connect</h2>
+                <p>Ready to be part of the revolution?</p>
+                
+                <div class="contact-card">
+                    <div class="contact-item">
+                        <h3>Transmit Message</h3>
+                        <a href="mailto:support@genuelabs.com">support@genuelabs.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Particle Generation
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Navigation Dots
+        const dots = document.querySelectorAll('.nav-dot');
+        const sections = document.querySelectorAll('section');
+        
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const targetSection = dot.getAttribute('data-section');
+                document.getElementById(targetSection).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Active dot on scroll
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+                if (dot.getAttribute('data-section') === current) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
