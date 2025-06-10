@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genue Labs - Transforming Ideas into Reality</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .animated-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-container {
+            margin-bottom: 2rem;
+            animation: logoFloat 1.5s ease-out;
+        }
+
+        @keyframes logoFloat {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .animated-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+        }
+
+        .atom-structure {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            animation: atomRotate 10s linear infinite;
+        }
+
+        @keyframes atomRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .electron-orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            transform-origin: center;
+        }
+
+        .orbit-1 {
+            width: 80px;
+            height: 80px;
+            margin: -40px 0 0 -40px;
+            animation: orbit1 3s linear infinite;
+        }
+
+        .orbit-2 {
+            width: 100px;
+            height: 40px;
+            margin: -20px 0 0 -50px;
+            animation: orbit2 4s linear infinite;
+            transform: rotateX(60deg);
+        }
+
+        .orbit-3 {
+            width: 100px;
+            height: 40px;
+            margin: -20px 0 0 -50px;
+            animation: orbit3 5s linear infinite;
+            transform: rotateX(-60deg);
+        }
+
+        @keyframes orbit1 {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes orbit2 {
+            from { transform: rotateX(60deg) rotate(0deg); }
+            to { transform: rotateX(60deg) rotate(360deg); }
+        }
+
+        @keyframes orbit3 {
+            from { transform: rotateX(-60deg) rotate(0deg); }
+            to { transform: rotateX(-60deg) rotate(360deg); }
+        }
+
+        .electron {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .electron-1 {
+            top: -4px;
+            left: 50%;
+            margin-left: -4px;
+        }
+
+        .electron-2 {
+            top: 50%;
+            right: -4px;
+            margin-top: -4px;
+        }
+
+        .nucleus {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 30px;
+            margin: -15px 0 0 -15px;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .company-name {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from { filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)); }
+            to { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8)); }
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeIn 2s ease-out 0.5s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 0.9; }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeIn 2s ease-out 1s both;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .apps-section {
+            padding: 5rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            margin-top: 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .app-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 18px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .app-description {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .coming-soon {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+        }
+
+        .coming-soon .app-icon {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-info {
+            margin-bottom: 1rem;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .company-name {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 200px;
+                justify-content: center;
+            }
+            
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .animated-logo {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .company-name {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .app-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-background"></div>
+    
+    <div class="container">
+        <section class="hero">
+            <div class="logo-container">
+                <div class="animated-logo">
+                    <div class="atom-structure">
+                        <div class="electron-orbit orbit-1">
+                            <div class="electron electron-1"></div>
+                        </div>
+                        <div class="electron-orbit orbit-2">
+                            <div class="electron electron-2"></div>
+                        </div>
+                        <div class="electron-orbit orbit-3">
+                            <div class="electron electron-1"></div>
+                        </div>
+                        <div class="nucleus">G</div>
+                    </div>
+                </div>
+            </div>
+            
+            <h1 class="company-name">Genue Labs</h1>
+            <p class="tagline">Transforming brilliant ideas into reality, one innovation at a time</p>
+            
+            <div class="cta-buttons">
+                <a href="#apps" class="btn btn-primary">Explore Our Apps</a>
+                <a href="mailto:support@genuelabs.com" class="btn btn-secondary">Get in Touch</a>
+            </div>
+        </section>
+        
+        <section id="apps" class="apps-section">
+            <div class="container">
+                <h2 class="section-title">Our Applications</h2>
+                
+                <div class="apps-grid">
+                    <!-- Main App -->
+                    <div class="app-card">
+                        <div class="app-icon">💊</div>
+                        <h3 class="app-title">Medication Reminder</h3>
+                        <p class="app-description">
+                            Take control of your health with our comprehensive medication management app. 
+                            Smart tracking, flexible scheduling, and intelligent notifications ensure you never miss a dose.
+                        </p>
+                        <div class="cta-buttons">
+                            <a href="https://play.google.com/store/apps/details?id=com.levan.medication_reminder_app" 
+                               target="_blank" class="btn btn-primary">Get on Google Play</a>
+                            <a href="#" class="btn btn-secondary">Coming to App Store</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Coming Soon Apps -->
+                    <div class="coming-soon">
+                        <div class="app-icon">🚀</div>
+                        <h3 class="app-title">Next Innovation</h3>
+                        <p class="app-description">Something amazing is brewing in our labs...</p>
+                        <p style="color: rgba(255,255,255,0.5); font-style: italic;">Coming Soon</p>
+                    </div>
+                    
+                    <div class="coming-soon">
+                        <div class="app-icon">⚡</div>
+                        <h3 class="app-title">Future Project</h3>
+                        <p class="app-description">Revolutionary solutions are on the way...</p>
+                        <p style="color: rgba(255,255,255,0.5); font-style: italic;">Coming Soon</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="contact-info">
+                <p>Contact us: <a href="mailto:support@genuelabs.com">support@genuelabs.com</a></p>
+            </div>
+            <p>&copy; 2025 Genue Labs. Innovating for a better tomorrow.</p>
+        </div>
+    </footer>
+</body>
+</html>
