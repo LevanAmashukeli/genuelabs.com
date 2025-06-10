@@ -18,437 +18,309 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             overflow-x: hidden;
-            background: #000;
+            background: #0a0a0a;
+            color: white;
             min-height: 100vh;
         }
 
-        /* Floating Navigation Dots */
-        .nav-dots {
+        /* Dark gradient background */
+        .background {
             position: fixed;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at top, #1a1a2e 0%, #0a0a0a 100%);
         }
 
-        .nav-dot {
-            width: 12px;
-            height: 12px;
+        /* Subtle animated orbs */
+        .orb {
+            position: absolute;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            cursor: pointer;
+            filter: blur(100px);
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb1 {
+            width: 600px;
+            height: 600px;
+            background: #6c5ce7;
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 400px;
+            height: 400px;
+            background: #0984e3;
+            bottom: -100px;
+            right: -100px;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(100px, -50px) scale(1.1); }
+            50% { transform: translate(-50px, 100px) scale(0.9); }
+            75% { transform: translate(50px, 50px) scale(1.05); }
+        }
+
+        /* Clean Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 0;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.9), transparent);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #6c5ce7, #0984e3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
             transition: all 0.3s ease;
             position: relative;
         }
 
-        .nav-dot::before {
-            content: attr(data-tooltip);
-            position: absolute;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 5px 15px;
-            border-radius: 20px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
+        .nav-links a:hover {
             color: white;
         }
 
-        .nav-dot:hover::before {
-            opacity: 1;
-            right: 40px;
-        }
-
-        .nav-dot.active {
-            background: white;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-        }
-
-        .nav-dot:hover {
-            transform: scale(1.5);
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Animated Background */
-        .matrix-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: linear-gradient(to bottom, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-        }
-
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        .particle {
+        .nav-links a::after {
+            content: '';
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: float-up 15s linear infinite;
-        }
-
-        @keyframes float-up {
-            0% {
-                transform: translateY(100vh) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
-            }
-        }
-
-        /* Geometric Grid Overlay */
-        .grid-overlay {
-            position: fixed;
-            top: 0;
+            bottom: -5px;
             left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #6c5ce7, #0984e3);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            animation: fadeUp 1s ease-out;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Simple animated logo */
+        .animated-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 3rem;
+            position: relative;
+        }
+
+        .logo-circle {
             width: 100%;
             height: 100%;
-            z-index: -1;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: grid-move 20s linear infinite;
+            border: 3px solid;
+            border-color: #6c5ce7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            position: relative;
+            animation: rotate 10s linear infinite;
         }
 
-        @keyframes grid-move {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo-circle::before {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: #0984e3;
+            border-right-color: #0984e3;
+            animation: rotate 5s linear infinite reverse;
+        }
+
+        .company-name {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        /* Modern buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #6c5ce7, #0984e3);
+            color: white;
+        }
+
+        .btn-secondary {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            background: transparent;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 80px 0 40px;
-            position: relative;
-        }
-
-        /* Hero Section */
-        .hero {
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-            color: white;
-        }
-
-        .hero-content {
-            animation: hero-entrance 1.5s ease-out;
-        }
-
-        @keyframes hero-entrance {
-            0% {
-                opacity: 0;
-                transform: scale(0.9) translateY(50px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        /* Holographic Logo */
-        .logo-container {
-            margin-bottom: 3rem;
-            perspective: 1000px;
-        }
-
-        .holographic-logo {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: logo-float 6s ease-in-out infinite;
-        }
-
-        @keyframes logo-float {
-            0%, 100% { transform: rotateY(0deg) rotateX(0deg) translateY(0); }
-            25% { transform: rotateY(45deg) rotateX(10deg) translateY(-10px); }
-            50% { transform: rotateY(0deg) rotateX(-10deg) translateY(-20px); }
-            75% { transform: rotateY(-45deg) rotateX(10deg) translateY(-10px); }
-        }
-
-        .logo-layer {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 2px solid;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            font-weight: bold;
-        }
-
-        .logo-layer:nth-child(1) {
-            border-color: #00ffff;
-            color: #00ffff;
-            transform: translateZ(10px);
-        }
-
-        .logo-layer:nth-child(2) {
-            border-color: #ff00ff;
-            color: #ff00ff;
-            transform: translateZ(0px);
-            opacity: 0.8;
-        }
-
-        .logo-layer:nth-child(3) {
-            border-color: #ffff00;
-            color: #ffff00;
-            transform: translateZ(-10px);
-            opacity: 0.6;
-        }
-
-        /* Glitch Effect for Title */
-        .company-name {
-            font-size: 5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            position: relative;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-        }
-
-        .glitch {
-            position: relative;
-            color: white;
-            font-size: inherit;
-            font-weight: inherit;
-            text-shadow: 
-                0.05em 0 0 rgba(255, 0, 0, 0.75),
-                -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
-                0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
-            animation: glitch 1s infinite;
-        }
-
-        @keyframes glitch {
-            0%, 100% {
-                text-shadow: 
-                    0.05em 0 0 rgba(255, 0, 0, 0.75),
-                    -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
-                    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
-            }
-            20% {
-                text-shadow: 
-                    0.05em 0 0 rgba(255, 0, 0, 0.75),
-                    -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
-                    0.05em 0.025em 0 rgba(0, 0, 255, 0.75);
-            }
-        }
-
-        .tagline {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            opacity: 0.8;
-            font-weight: 300;
-            letter-spacing: 2px;
-        }
-
-        /* Futuristic Buttons */
-        .cta-buttons {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .quantum-btn {
-            position: relative;
-            padding: 15px 40px;
-            background: transparent;
-            color: white;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .quantum-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
-            z-index: -1;
-            opacity: 0.5;
-            transition: all 0.3s ease;
-        }
-
-        .quantum-btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.6s ease;
-        }
-
-        .quantum-btn:hover::after {
-            width: 300px;
-            height: 300px;
-        }
-
-        .quantum-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
-        }
-
-        .quantum-btn span {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* App Cards with 3D Effect */
-        .apps-section {
-            background: rgba(255, 255, 255, 0.02);
         }
 
         .section-title {
-            text-align: center;
             font-size: 3rem;
-            color: white;
+            font-weight: 300;
+            text-align: center;
             margin-bottom: 4rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
             position: relative;
         }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #00ffff, transparent);
-            animation: line-glow 2s ease-in-out infinite;
-        }
-
-        @keyframes line-glow {
-            0%, 100% { opacity: 0.5; width: 100px; }
-            50% { opacity: 1; width: 200px; }
-        }
-
+        /* Apps Section */
         .apps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-            perspective: 1000px;
+            gap: 2rem;
         }
 
         .app-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 3rem;
             text-align: center;
-            color: white;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            overflow: hidden;
-        }
-
-        .app-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: all 0.6s ease;
-            animation: card-pulse 3s ease-in-out infinite;
-        }
-
-        @keyframes card-pulse {
-            0%, 100% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.2); opacity: 0.3; }
+            transition: all 0.3s ease;
         }
 
         .app-card:hover {
-            transform: rotateY(10deg) rotateX(5deg) translateZ(50px);
-            box-shadow: 
-                0 25px 50px rgba(0, 255, 255, 0.3),
-                0 0 100px rgba(255, 0, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .app-icon {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 2rem;
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
-            border-radius: 25px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #6c5ce7, #0984e3);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            position: relative;
-            animation: icon-float 3s ease-in-out infinite;
+            font-size: 2.5rem;
+            margin: 0 auto 2rem;
         }
 
-        @keyframes icon-float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
+        .app-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
         }
 
-        /* Store Buttons */
+        .app-description {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
         .store-buttons {
             display: flex;
             gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 2rem;
         }
 
         .store-button {
@@ -458,12 +330,10 @@
 
         .store-button img {
             height: 50px;
-            filter: brightness(0.9);
             transition: all 0.3s ease;
         }
 
         .store-button:hover img {
-            filter: brightness(1.1);
             transform: scale(1.05);
         }
 
@@ -478,23 +348,21 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(0, 0, 0, 0.9);
-            color: #00ffff;
+            color: white;
             padding: 6px 16px;
             border-radius: 15px;
             font-size: 0.8rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            border: 1px solid #00ffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* Sections */
-        .about-section,
-        .contact-section {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
+        .coming-soon {
+            opacity: 0.5;
         }
 
+        /* About & Contact */
         .about-content,
         .contact-content {
             max-width: 800px;
@@ -502,13 +370,11 @@
             text-align: center;
         }
 
-        .about-content p,
-        .contact-content p {
+        .about-content p {
             font-size: 1.2rem;
-            line-height: 2;
-            opacity: 0.8;
-            margin-bottom: 2rem;
+            line-height: 1.8;
             color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
         }
 
         .contact-card {
@@ -517,116 +383,134 @@
             border-radius: 20px;
             padding: 3rem;
             margin-top: 3rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .contact-item {
-            margin-bottom: 2rem;
         }
 
         .contact-item h3 {
             font-size: 1.4rem;
             margin-bottom: 1rem;
-            color: #00ffff;
+            color: white;
         }
 
         .contact-item a {
-            color: white;
+            color: #0984e3;
             text-decoration: none;
             font-size: 1.2rem;
-            position: relative;
-            display: inline-block;
         }
 
-        .contact-item a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #00ffff, #ff00ff);
-            transition: width 0.3s ease;
+        .contact-item a:hover {
+            text-decoration: underline;
         }
 
-        .contact-item a:hover::after {
-            width: 100%;
+        /* Mobile menu */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 5px 0;
+            transition: all 0.3s ease;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .nav-dots {
-                right: 15px;
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                width: 100%;
+                height: 100vh;
+                padding-top: 5rem;
+                gap: 2rem;
+                transition: all 0.3s ease;
+                justify-content: center;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: block;
+                z-index: 1001;
+            }
+
+            .nav-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .nav-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .nav-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
             }
 
             .company-name {
-                font-size: 3rem;
-            }
-
-            .holographic-logo {
-                width: 100px;
-                height: 100px;
-            }
-
-            .logo-layer {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
 
             .apps-grid {
                 grid-template-columns: 1fr;
-                gap: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="matrix-bg"></div>
-    <div class="grid-overlay"></div>
-    <div class="particles" id="particles"></div>
-    
-    <!-- Custom Cursor -->
-    
-    <!-- Navigation Dots -->
-    <nav class="nav-dots">
-        <div class="nav-dot active" data-section="home" data-tooltip="Home"></div>
-        <div class="nav-dot" data-section="apps" data-tooltip="Our Apps"></div>
-        <div class="nav-dot" data-section="about" data-tooltip="About"></div>
-        <div class="nav-dot" data-section="contact" data-tooltip="Contact"></div>
+    <div class="background">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Genue Labs</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#apps">Apps</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </nav>
-    
+
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="logo-container">
-                    <div class="holographic-logo">
-                        <div class="logo-layer">G</div>
-                        <div class="logo-layer">G</div>
-                        <div class="logo-layer">G</div>
-                    </div>
-                </div>
-                
-                <h1 class="company-name">
-                    <span class="glitch">GENUE LABS</span>
-                </h1>
-                <p class="tagline">Transforming Ideas Into Reality</p>
-                
-                <div class="cta-buttons">
-                    <a href="#apps" class="quantum-btn">
-                        <span>View Our Apps</span>
-                    </a>
-                    <a href="#contact" class="quantum-btn">
-                        <span>Contact Us</span>
-                    </a>
-                </div>
+        <div class="hero-content">
+            <div class="animated-logo">
+                <div class="logo-circle">G</div>
+            </div>
+            
+            <h1 class="company-name">Genue Labs</h1>
+            <p class="tagline">Transforming Ideas Into Reality</p>
+            
+            <div class="cta-buttons">
+                <a href="#apps" class="btn btn-primary">View Our Apps</a>
+                <a href="#contact" class="btn btn-secondary">Contact Us</a>
             </div>
         </div>
     </section>
-    
+
     <!-- Apps Section -->
-    <section id="apps" class="apps-section">
+    <section id="apps">
         <div class="container">
-            <h2 class="section-title">Our Innovations</h2>
+            <h2 class="section-title">Our Applications</h2>
             
             <div class="apps-grid">
                 <div class="app-card">
@@ -653,51 +537,54 @@
                 
                 <div class="app-card coming-soon">
                     <div class="app-icon">🚀</div>
-                    <h3 class="app-title">Project Nexus</h3>
+                    <h3 class="app-title">Coming Soon</h3>
                     <p class="app-description">
-                        The future of connectivity. Coming 2025.
+                        Something amazing is in development. Stay tuned for our next innovation.
                     </p>
                 </div>
                 
                 <div class="app-card coming-soon">
-                    <div class="app-icon">⚡</div>
-                    <h3 class="app-title">Quantum Core</h3>
+                    <div class="app-icon">✨</div>
+                    <h3 class="app-title">Future Project</h3>
                     <p class="app-description">
-                        Redefining possibilities. In development.
+                        We're always working on new ideas to make your life better.
                     </p>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <!-- About Section -->
-    <section id="about" class="about-section">
+    <section id="about">
         <div class="container">
             <div class="about-content">
-                <h2 class="section-title">The Vision</h2>
+                <h2 class="section-title">About Genue Labs</h2>
                 <p>
-                    At Genue Labs, we don't just create apps—we architect the future. 
-                    Our quantum-inspired development process pushes the boundaries of what's possible,
-                    merging cutting-edge technology with human-centered design.
+                    We believe in the power of technology to transform everyday experiences. 
+                    Our mission is to create intuitive, reliable, and impactful solutions 
+                    that make a real difference in people's lives.
                 </p>
                 <p>
-                    Every line of code is a step toward tomorrow. Every innovation brings us closer 
-                    to a world where technology seamlessly enhances human potential.
+                    Founded with a passion for innovation and a commitment to excellence, 
+                    we strive to build applications that seamlessly integrate into your daily routine, 
+                    making complex tasks simple and enjoyable.
                 </p>
             </div>
         </div>
     </section>
-    
+
     <!-- Contact Section -->
-    <section id="contact" class="contact-section">
+    <section id="contact">
         <div class="container">
             <div class="contact-content">
-                <h2 class="section-title">Connect</h2>
-                <p>Ready to be part of the revolution?</p>
+                <h2 class="section-title">Get in Touch</h2>
+                <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 3rem;">
+                    Have questions or feedback? We'd love to hear from you.
+                </p>
                 
                 <div class="contact-card">
                     <div class="contact-item">
-                        <h3>Transmit Message</h3>
+                        <h3>Email Us</h3>
                         <a href="mailto:support@genuelabs.com">support@genuelabs.com</a>
                     </div>
                 </div>
@@ -706,45 +593,30 @@
     </section>
 
     <script>
-        // Particle Generation
-        const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 50; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 15 + 's';
-            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-            particlesContainer.appendChild(particle);
-        }
-
-        // Navigation Dots
-        const dots = document.querySelectorAll('.nav-dot');
-        const sections = document.querySelectorAll('section');
+        // Mobile menu
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
         
-        dots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                const targetSection = dot.getAttribute('data-section');
-                document.getElementById(targetSection).scrollIntoView({ behavior: 'smooth' });
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        // Close menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                navToggle.classList.remove('active');
             });
         });
 
-        // Active dot on scroll
-        window.addEventListener('scroll', () => {
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                
-                if (window.pageYOffset >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            dots.forEach(dot => {
-                dot.classList.remove('active');
-                if (dot.getAttribute('data-section') === current) {
-                    dot.classList.add('active');
+        // Smooth scroll for anchors
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
