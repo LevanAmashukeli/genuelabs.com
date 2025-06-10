@@ -24,32 +24,6 @@
             background: var(--dark);
             color: var(--light);
             overflow-x: hidden;
-            cursor: none;
-        }
-
-        /* Custom Cursor */
-        .cursor {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.1s ease;
-            mix-blend-mode: difference;
-        }
-
-        .cursor::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
         }
 
         /* Quantum Background */
@@ -677,14 +651,6 @@
 
         /* Mobile */
         @media (max-width: 768px) {
-            .cursor {
-                display: none;
-            }
-            
-            body {
-                cursor: auto;
-            }
-            
             .hero-logo {
                 width: 200px;
                 height: 200px;
@@ -739,9 +705,6 @@
             <text x="100" y="110" text-anchor="middle" fill="#06b6d4" font-size="40" font-weight="bold">G</text>
         </svg>
     </div>
-
-    <!-- Custom Cursor -->
-    <div class="cursor" id="cursor"></div>
 
     <!-- Quantum Field Background -->
     <div class="quantum-field" id="quantumField"></div>
@@ -907,45 +870,6 @@
             setTimeout(() => {
                 document.getElementById('loader').classList.add('hidden');
             }, 2000);
-        });
-
-        // Custom Cursor
-        const cursor = document.getElementById('cursor');
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function animateCursor() {
-            const dx = mouseX - cursorX;
-            const dy = mouseY - cursorY;
-            
-            cursorX += dx * 0.1;
-            cursorY += dy * 0.1;
-            
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
-        // Interactive elements hover
-        const interactiveElements = document.querySelectorAll('a, button, .app-card');
-        
-        interactiveElements.forEach(elem => {
-            elem.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(2)';
-                cursor.style.borderColor = 'var(--primary)';
-            });
-            
-            elem.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                cursor.style.borderColor = 'var(--accent)';
-            });
         });
 
         // Quantum Field Animation
