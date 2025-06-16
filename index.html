@@ -18,7 +18,6 @@
             min-height: 100vh;
         }
 
-        /* Loading Screen с центрированным логотипом */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -43,7 +42,6 @@
             height: 120px;
         }
 
-        /* Основной логотип - изначально невидим */
         .logo-container {
             margin-bottom: 2rem;
             opacity: 0;
@@ -109,7 +107,7 @@
             75% { 
                 transform: translateX(15px) translateY(-10px) scale(1.02);
                 opacity: 0.9;
-            }FULL
+            }
         }
 
         @keyframes atmosphereFlow {
@@ -359,7 +357,6 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
-        /* Элементы которые появляются после загрузки */
         .fade-in-content {
             opacity: 0;
             animation: fadeInUp 1s ease-out 1.2s forwards;
@@ -507,27 +504,6 @@
 
         .store-button img {
             height: 50px;
-        }
-
-        .coming-soon-badge {
-            position: relative;
-            cursor: not-allowed;
-        }
-
-        .coming-soon-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 1px solid white;
         }
 
         .coming-soon {
@@ -731,7 +707,6 @@
     <!-- Home Section -->
     <section id="home" class="hero">
         <div class="container">
-            <!-- Логотип появляется после исчезновения загрузочного -->
             <div class="logo-container" id="mainLogo">
                 <div class="animated-logo">
                     <div class="atom-structure">
@@ -782,11 +757,11 @@
                         <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" 
                              alt="Get it on Google Play">
                     </a>
-                    <div class="store-button coming-soon-badge">
+                    <a href="https://apps.apple.com/us/app/medication-alert/id6747119431" 
+                       target="_blank" class="store-button">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" 
-                             alt="Download on the App Store" style="opacity: 0.3;">
-                        <span class="coming-soon-overlay">Coming Soon</span>
-                    </div>
+                             alt="Download on the App Store">
+                    </a>
                 </div>
                 <div style="margin-top: 20px; font-size: 0.9rem;">
                     <a href="/medicationalert/support.html" style="color: white; margin: 0 10px;">Support</a>
@@ -870,12 +845,9 @@
 </footer>
 
     <script>
-        // Loading Screen с плавным переходом
         window.addEventListener('load', () => {
             setTimeout(() => {
-                // Скрываем загрузочный экран
                 document.getElementById('loadingScreen').classList.add('hidden');
-                // Показываем основной логотип
                 document.getElementById('mainLogo').classList.add('show');
             }, 1000);
         });
